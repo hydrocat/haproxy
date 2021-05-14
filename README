@@ -1,3 +1,7 @@
+HAPROXY that resolves hostnames for option http_proxy
+####
+
+
 The HAProxy documentation has been split into a number of different files for
 ease of use.
 
