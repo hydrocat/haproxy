@@ -1687,8 +1687,7 @@ int url2sa(const char *url, int ulen, struct sockaddr_storage *addr, struct spli
 			/* Set family. */
 			((struct sockaddr_in *)addr)->sin_family = AF_INET;
 			return curr - url;
-		}
-		else if (global.mode & MODE_STARTING) {
+		} else {
 			/* The IPv4 and IPv6 decoding fails, maybe the url contain name. Try to execute
 			 * synchronous DNS request only if HAProxy is in the start state.
 			 */
