@@ -463,29 +463,6 @@ static inline struct ist __istappend(struct ist dst, const char src)
 }
 
 /* copies <src> over <dst> for a maximum of <count> bytes. Returns the number
- * of characters copied (src.len), or -1 if it does not fit. In all cases, the
- * contents are copied prior to reporting an error, so that the destination
- * at least contains a valid but truncated string.
- */
-static inline ssize_t istcpy(struct ist *dst, const struct ist src, size_t count)
-{
-	dst->len = 0;
-
-	if (count > src.len)
-		count = src.len;
-
-	while (dst->len < count) {
-		dst->ptr[dst->len] = src.ptr[dst->len];
-		dst->len++;
-	}
-
-	if (dst->len == src.len)
-		return src.len;
-
-	return -1;
-}
-
-/* copies <src> over <dst> for a maximum of <count> bytes. Returns the number
  * of characters copied, or -1 if it does not fit. A (possibly truncated) valid
  * copy of <src> is always left into <dst>, and a trailing \0 is appended as
  * long as <count> is not null, even if that results in reducing the string by
@@ -511,6 +488,31 @@ static inline ssize_t istscpy(struct ist *dst, const struct ist src, size_t coun
 		return src.len;
  fail:
 	return -1;
+}
+
+/* copies <src> over <dst> for a maximum of <count> bytes. Returns the number
+ * of characters copied (src.len), or -1 if it does not fit. In all cases, the
+ * contents are copied prior to reporting an error, so that the destination
+ * at least contains a valid but truncated string.
+ */
+static inline ssize_t istcpy(struct ist *dst, const struct ist src, size_t count)
+{
+  return istscpy(dst, src, count);
+  
+	/* dst->len = 0; */
+
+	/* if (count > src.len) */
+	/* 	count = src.len; */
+
+	/* while (dst->len < count) { */
+	/* 	dst->ptr[dst->len] = src.ptr[dst->len]; */
+	/* 	dst->len++; */
+	/* } */
+
+	/* if (dst->len == src.len) */
+	/* 	return src.len; */
+
+	/* return -1; */
 }
 
 /* appends <src> after <dst> for a maximum of <count> total bytes in <dst> after
